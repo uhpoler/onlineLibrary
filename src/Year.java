@@ -1,12 +1,17 @@
-public class Year {
+public class Year implements Cloneable{
 
-    private String year;
+    private int year;
 
     public Year(){
-        this.year="";
+        this.year=0;
     }
-    public Year(String year){
+    public Year(int year){
         this.year=year;
     }
 
+
+    @Override
+    public String toString() {
+        return String.valueOf(year);
+    }
 }
