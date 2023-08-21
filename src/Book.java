@@ -40,6 +40,30 @@ public class Book extends Library{
         notes = new ArrayList<>();
     }
 
+    public Book(String title, String author, int year, Genre bookType){
+        this.title=title;
+        this.author=new Author(author);
+        this.year=new Year(year);
+        this.bookType=bookType;
+        notes = new ArrayList<>();
+    }
+
+    public Book(String title, Author author, int year, Genre bookType){
+        this.title=title;
+        this.author=author;
+        this.year=new Year(year);
+        this.bookType=bookType;
+        notes = new ArrayList<>();
+    }
+
+    public Book(String title, String author, Year year, Genre bookType){
+        this.title=title;
+        this.author=new Author(author);
+        this.year=year;
+        this.bookType=bookType;
+        notes = new ArrayList<>();
+    }
+
     //конструктор копіювання
     public Book(Book other){
         this.title=other.title;
@@ -58,7 +82,7 @@ public class Book extends Library{
     public String getTitle() {return title;}
     public void setTitle(String title){this.title=title;}
     public Author getAuthor() {return author;}
-    public void setAuthor(Author author){this.author=author;}
+    public void setAuthor(String author){this.author=new Author(author);}
     public Year getYear() {return year;}
     public void setYear(int year) {this.year = new Year(year);}
     public Genre getGenre() {return bookType;}
@@ -96,10 +120,9 @@ public class Book extends Library{
 
     @Override
     public void showByAuthor() {
-        System.out.println("Книги автора " + author.getFullName() + ":");
         //використання equals
         if (author.equals(this.getAuthor())) {
-            this.show(); // Викликаємо метод show() для поточної книги
+            this.show();
         }
     }
 
@@ -108,19 +131,20 @@ public class Book extends Library{
     @Override
     public void addNote(String note){
         notes.add(note);
-        System.out.println("String notes have been added");
+        System.out.println("Коментар додано");
     }
 
     //overloading
     public void addNote(String[] noteArray) {
         notes.addAll(Arrays.asList(noteArray));
+        System.out.println("Масив коментарів додано");
     }
 
 
     @Override
-    public void showNotes() {
+    public void showNotes() throws Exception {
         if (notes.isEmpty()) {
-            System.out.println("Немає нотаток для цієї книги.");
+            throw new Exception("Немає нотаток для цієї книги.");
         } else {
             System.out.println("Нотатки для книги '" + getTitle() + "':");
             for (String note : notes) {
@@ -129,6 +153,12 @@ public class Book extends Library{
         }
     }
 
+    public static void printGenres() {
+        System.out.println("Список жанрів:");
+        for (Book.Genre genre : Book.Genre.values()) {
+            System.out.println(genre);
+        }
+    }
 
 }
 

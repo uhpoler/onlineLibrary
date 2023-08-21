@@ -14,6 +14,7 @@ public class Magazine extends Library{
         this.title="";
         this.author=null;
         this.year=null;
+        notes = new ArrayList<>();
     }
 
     //основний конструктор
@@ -21,6 +22,21 @@ public class Magazine extends Library{
         this.title=title;
         this.author=author;
         this.year=year;
+        notes = new ArrayList<>();
+    }
+
+    public Magazine(String title, String author, int year){
+        this.title=title;
+        this.author=new Author(author);
+        this.year=new Year(year);
+        notes = new ArrayList<>();
+    }
+
+    public Magazine(String title, Author author, int year){
+        this.title=title;
+        this.author=author;
+        this.year=new Year(year);
+        notes = new ArrayList<>();
     }
 
     //конструктор копіювання
@@ -28,6 +44,7 @@ public class Magazine extends Library{
         this.title=other.title;
         this.author=other.author;
         this.year=other.year;
+        notes = new ArrayList<>();
     }
 
     public Magazine copy(){
@@ -38,9 +55,9 @@ public class Magazine extends Library{
     public String getTitle() {return title;}
     public void setTitle(String title){this.title=title;}
     public Author getAuthor() {return author;}
-    public void setAuthor(Author author){this.author=author;}
+    public void setAuthor(String author){this.author=new Author(author);}
     public Year getYear() {return year;}
-    public void setYear(Year year){this.year=year;}
+    public void setYear(int year) {this.year = new Year(year);}
 
 
 
@@ -51,7 +68,6 @@ public class Magazine extends Library{
 
     @Override
     public void showByAuthor() {
-        System.out.println("Журнали автора " + author.getFullName() + ":");
         //використання equals
         if (author.equals(this.getAuthor())) {
             this.show();
@@ -63,19 +79,20 @@ public class Magazine extends Library{
     @Override
     public void addNote(String note){
         notes.add(note);
-        System.out.println("Notes have been added");
+        System.out.println("Коментар додано");
     }
 
     //overloading
     public void addNote(String[] noteArray) {
         notes.addAll(Arrays.asList(noteArray));
+        System.out.println("Масив коментарів додано");
     }
 
 
     @Override
-    public void showNotes() {
+    public void showNotes() throws Exception {
         if (notes.isEmpty()) {
-            System.out.println("Немає нотаток для цього журналу.");
+            throw new Exception("Немає нотаток для цього журналу.");
         } else {
             System.out.println("Нотатки для журналу '" + getTitle() + "':");
             for (String note : notes) {
